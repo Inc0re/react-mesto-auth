@@ -1,0 +1,31 @@
+.profile__info {
+  display: grid;
+  max-width: 550px;
+  grid-template-areas:
+    'name edit'
+    'job job';
+  row-gap: 10px;
+  column-gap: 18px;
+  margin-left: 30px;
+  margin-top: 42px;
+}
+
+@media screen and (max-width: 970px) {
+  .profile__info {
+    max-width: 350px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile__info {
+    margin-top: 26px;
+    margin-left: 25px;
+    column-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile__info {
+    margin-left: 0;
+  }
+}

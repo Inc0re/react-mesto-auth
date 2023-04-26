@@ -1,0 +1,8 @@
+.element__control {
+  /* display: flex; */
+  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  width: 85%;
+  margin: 22px auto;
+}

@@ -1,0 +1,17 @@
+.profile__avatar-edit {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(../../../images/edt-profile-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  border: 0 none;
+  outline: 0 none;
+  transition: opacity .3s linear;
+}
+
+.profile__avatar-edit:hover {
+  opacity: 1;
+}

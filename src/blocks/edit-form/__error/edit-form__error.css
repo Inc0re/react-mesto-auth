@@ -1,0 +1,10 @@
+.edit-form__error {
+  color: #f00;
+  font-size: 12px;
+  font-weight: 400;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 5px);
+  transition: .3s;
+  opacity: 1;
+}
