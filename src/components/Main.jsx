@@ -1,11 +1,11 @@
-import React from 'react';
-import Card from './Card';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CardsContext } from '../contexts/CardsContext';
+import React from 'react'
+import Card from './Card'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import { CardsContext } from '../contexts/CardsContext'
 
 export default function Main(props) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const cards = React.useContext(CardsContext);
+  const currentUser = React.useContext(CurrentUserContext)
+  const cards = React.useContext(CardsContext)
 
   return (
     <main className='content'>
@@ -49,10 +49,10 @@ export default function Main(props) {
                 onCardLike={props.onCardLike}
                 onCardDelete={props.onCardDelete}
               />
-            );
+            )
           })}
         </ul>
       </section>
     </main>
-  );
+  )
 }
