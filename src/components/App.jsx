@@ -1,111 +1,116 @@
-import React from 'react';
-import Header from './Header';
-import Main from './Main';
-import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
-import ImagePopup from './ImagePopup';
-import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CardsContext } from '../contexts/CardsContext';
-import api from '../utils/Api';
+import React from 'react'
+import Header from './Header'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
+import Main from './Main'
+import Footer from './Footer'
+import PopupWithForm from './PopupWithForm'
+import ImagePopup from './ImagePopup'
+import EditProfilePopup from './EditProfilePopup'
+import EditAvatarPopup from './EditAvatarPopup'
+import AddPlacePopup from './AddPlacePopup'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import { CardsContext } from '../contexts/CardsContext'
+import api from '../utils/Api'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+    React.useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const [cards, setCards] = React.useState([]);
+    React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState(null)
+  const [currentUser, setCurrentUser] = React.useState(null)
+  const [cards, setCards] = React.useState([])
 
   React.useEffect(() => {
     api
       .getCurrentUserInfo()
       .then(res => {
-        setCurrentUser(res);
+        setCurrentUser(res)
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
     api
       .getInitialCards()
       .then(data => {
-        setCards(data);
+        setCards(data)
       })
-      .catch(err => console.log(err));
-  }, []);
+      .catch(err => console.log(err))
+  }, [])
 
   function handelEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen(true)
   }
 
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
+    setIsEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
+    setIsAddPlacePopupOpen(true)
   }
 
   function handleCardClick(card) {
-    setSelectedCard(card);
+    setSelectedCard(card)
   }
 
   function handleUpdateUser(data) {
     api
       .setUserInfo(data)
       .then(res => {
-        setCurrentUser(res);
-        closeAllPopups();
+        setCurrentUser(res)
+        closeAllPopups()
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   function handleUpdateAvatar(data) {
     api
       .updateUserAvatar(data)
       .then(res => {
-        setCurrentUser(res);
-        closeAllPopups();
+        setCurrentUser(res)
+        closeAllPopups()
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null);
+    setIsEditProfilePopupOpen(false)
+    setIsAddPlacePopupOpen(false)
+    setIsEditAvatarPopupOpen(false)
+    setSelectedCard(null)
   }
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i._id === currentUser._id)
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then(newCard => {
-        setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
+        setCards(state => state.map(c => (c._id === card._id ? newCard : c)))
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
       .then(() => {
-        setCards(state => state.filter(c => c._id !== card._id));
+        setCards(state => state.filter(c => c._id !== card._id))
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   function handleAddPlaceSubmit(data) {
-    api.addNewCard(data).then(newCard => {
-      setCards([newCard, ...cards]);
-      closeAllPopups();
-    }).catch(err => console.log(err));
+    api
+      .addNewCard(data)
+      .then(newCard => {
+        setCards([newCard, ...cards])
+        closeAllPopups()
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -145,7 +150,7 @@ function App() {
       />
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </CurrentUserContext.Provider>
-  );
+  )
 }
 
-export default App;
+export default App
