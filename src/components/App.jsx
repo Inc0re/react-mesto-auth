@@ -25,7 +25,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header loggedIn={loggedIn}/>
       <Routes>
         <Route
           path='*'
