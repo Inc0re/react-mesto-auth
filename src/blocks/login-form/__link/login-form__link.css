@@ -8,3 +8,9 @@
   line-height: 1.21;
   margin-top: 15px;
 }
+
+@media screen and (max-width: 425px) {
+  .login-form__link {
+    margin-top: 20px;
+  }
+}

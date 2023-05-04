@@ -1,12 +1,5 @@
 function Register() {
   return (
-    <>
-      <div
-        style={{
-          maxWidth: '358px',
-          margin: '0 auto',
-        }}
-      >
         <form className='login-form'>
           <h2 className='login-form__title'>Регистрация</h2>
           <input
@@ -34,8 +27,6 @@ function Register() {
             </a>
           </div>
         </form>
-      </div>
-    </>
   )
 }
 

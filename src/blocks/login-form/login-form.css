@@ -7,3 +7,10 @@
   padding: 0;
   border: 0 none;
 }
+
+@media screen and (max-width: 425px) {
+  .login-form {
+    max-width: 81%;
+    margin-top: 40px;
+  }
+}

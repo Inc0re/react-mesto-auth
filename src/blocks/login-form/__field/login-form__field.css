@@ -3,6 +3,7 @@
   border: 0 none;
   border-bottom: 2px solid #ccc;
   background-color: transparent;
+  color: #fff;
   outline: 0 none;
   line-height: 2;
   font-size: 14px;
@@ -17,4 +18,8 @@
 
 .login-form__field::placeholder {
   color: #ccc;
+}
+
+.login-form__field:not(:placeholder-shown):invalid{
+  border-color: #f00;
 }
