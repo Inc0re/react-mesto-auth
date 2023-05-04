@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <header className='header'>
-      <a href='#' className='header__logo' />
+      <Link className='header__logo' to='/' />
     </header>
   );
 }
