@@ -1,32 +1,40 @@
+import { useState } from 'react'
+import AuthForm from './AuthForm'
+import InfoTooltip from './InfoTooltip'
+import authApi from '../utils/AuthApi'
+
 function Register() {
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [isPopupOpened, setIsPopupOpened] = useState(false)
+
+  function handleRegister(userData) {
+    authApi
+      .register(userData)
+      .then(res => {
+        setIsSuccess(true)
+        setIsPopupOpened(true)
+      })
+      .catch(err => {
+        setIsSuccess(false)
+        setIsPopupOpened(true)
+        console.log(err)
+      })
+  }
+
   return (
-        <form className='login-form'>
-          <h2 className='login-form__title'>Регистрация</h2>
-          <input
-            className='login-form__field'
-            type='email'
-            name='email'
-            placeholder='Email'
-            required
-          />
-          <input
-            className='login-form__field'
-            type='password'
-            name='password'
-            placeholder='Пароль'
-            required
-          />
-          <button className='login-form__btn' type='submit'>
-            Зарегистрироваться
-          </button>
-          <div className='login-form__link'>
-            Уже зарегистрированы?
-            &nbsp;
-            <a className='link' href='/sign-in'>
-              Войти
-            </a>
-          </div>
-        </form>
+    <>
+      <AuthForm
+        title='Регистрация'
+        btnText='Зарегистрироваться'
+        showLink={true}
+        onSubmit={handleRegister}
+      />
+      <InfoTooltip
+        isOpened={isPopupOpened}
+        isSuccess={isSuccess}
+        setIsPopupOpened={setIsPopupOpened}
+      />
+    </>
   )
 }
 
