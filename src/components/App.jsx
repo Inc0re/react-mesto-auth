@@ -38,8 +38,18 @@ function App() {
             />
           }
         />
-        <Route path='/sign-in' element={<Login />} />
-        <Route path='/sign-up' element={<Register />} />
+        <Route
+          path='/sign-in'
+          element={
+            <ProtectedRoute element={Login} loggedIn={!loggedIn} path='/' />
+          }
+        />
+        <Route
+          path='/sign-up'
+          element={
+            <ProtectedRoute element={Register} loggedIn={!loggedIn} path='/' />
+          }
+        />
       </Routes>
     </CurrentUserContext.Provider>
   )
