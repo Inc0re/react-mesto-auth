@@ -1,29 +1,35 @@
 function Register() {
   return (
     <>
-      <div className=''>
-        <form className='edit-form'>
-          <h2 className='edit-form__title'>Регистрация</h2>
+      <div
+        style={{
+          maxWidth: '358px',
+          margin: '0 auto',
+        }}
+      >
+        <form className='login-form'>
+          <h2 className='login-form__title'>Регистрация</h2>
           <input
-            className='edit-form__field'
+            className='login-form__field'
             type='email'
             name='email'
             placeholder='Email'
             required
           />
           <input
-            className='edit-form__field'
+            className='login-form__field'
             type='password'
             name='password'
             placeholder='Пароль'
             required
           />
-          <button className='edit-form__btn-save' type='submit'>
+          <button className='login-form__btn' type='submit'>
             Зарегистрироваться
           </button>
-          <div className=''>
-            <p className=''>Уже зарегистрированы?</p>
-            <a className='' href='#'>
+          <div className='login-form__link'>
+            Уже зарегистрированы?
+            &nbsp;
+            <a className='link' href='/sign-in'>
               Войти
             </a>
           </div>
