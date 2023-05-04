@@ -1,6 +1,6 @@
 import Header from './Header'
 
-function SignIn() {
+function Login() {
   return (
     <>
       <Header />
@@ -8,4 +8,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Login
