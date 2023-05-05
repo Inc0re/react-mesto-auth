@@ -38,7 +38,10 @@ function Home({ setCurrentUser }) {
     api
       .updateUserAvatar(data)
       .then(res => {
-        setCurrentUser(res)
+        setCurrentUser({
+          ...currentUser,
+          avatar: res.avatar,
+        })
         closeAllPopups()
       })
       .catch(err => console.log(err))
@@ -60,7 +63,11 @@ function Home({ setCurrentUser }) {
     api
       .setUserInfo(data)
       .then(res => {
-        setCurrentUser(res)
+        setCurrentUser({
+          ...currentUser,
+          name: res.name,
+          about: res.about,
+        })
         closeAllPopups()
       })
       .catch(err => console.log(err))

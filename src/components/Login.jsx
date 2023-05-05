@@ -3,7 +3,7 @@ import AuthForm from './AuthForm'
 import InfoTooltip from './InfoTooltip'
 import authApi from '../utils/AuthApi'
 
-function Login() {
+function Login({ setLoggedIn }) {
   const [isSuccess, setIsSuccess] = useState(false)
   const [isPopupOpened, setIsPopupOpened] = useState(false)
 
@@ -11,9 +11,12 @@ function Login() {
     authApi
       .login(userData)
       .then(res => {
-        setIsSuccess(true)
-        setIsPopupOpened(true)
-        console.log(res.token)
+        if (res.token) {
+          setIsSuccess(true)
+          localStorage.setItem('jwt', res.token)
+          setLoggedIn(true)
+          console.log('Успешная авторизация. Токен сохранен в localStorage')
+        }
       })
       .catch(err => {
         setIsSuccess(false)

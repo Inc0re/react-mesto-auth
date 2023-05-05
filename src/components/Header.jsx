@@ -1,7 +1,22 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useContext, useState, useEffect } from 'react'
 
-export default function Header({ loggedIn }) {
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
+
+export default function Header({ loggedIn, handleLogout }) {
+  const currentUser = useContext(CurrentUserContext)
   const location = useLocation()
+  const [email, setEmail] = useState('')
+
+  useEffect(() => {
+    if (currentUser) {
+      setEmail(currentUser.email)
+    }
+  }, [currentUser])
+
+  function logOut() {
+    handleLogout()
+  }
 
   return (
     <header className='header'>
@@ -17,9 +32,17 @@ export default function Header({ loggedIn }) {
           </Link>
         )
       ) : (
-        <Link className='header__link header__link_color_gray' to='/sign-in'>
-          Выйти
-        </Link>
+        <div className='header__container'>
+          {currentUser && (
+            <div className='header__email'>{email}</div>
+          )}
+          <Link
+            className='header__link header__link_color_gray'
+            onClick={logOut}
+          >
+            Выйти
+          </Link>
+        </div>
       )}
     </header>
   )
