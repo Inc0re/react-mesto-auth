@@ -10,23 +10,25 @@ import AddPlacePopup from './AddPlacePopup'
 import api from '../utils/Api'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
-function Home({setCurrentUser}) {
+function Home({ setCurrentUser }) {
   const [cards, setCards] = useState([])
+  const [selectedCard, setSelectedCard] = useState(null)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   const currentUser = React.useContext(CurrentUserContext)
 
-    React.useEffect(() => {
-      api
-        .getInitialCards()
-        .then(data => {
-          setCards(data)
-        })
-        .catch(err => console.log(err))
-    }, [])
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then(data => {
+        setCards(data)
+      })
+      .catch(err => console.log(err))
+      .finally(() => setIsLoading(false))
+  }, [])
 
   function handelEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -106,14 +108,16 @@ function Home({setCurrentUser}) {
   return (
     <>
       <CardsContext.Provider value={cards}>
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handelEditAvatarClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+        {!isLoading && (
+          <Main
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handelEditAvatarClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+          />
+        )}
       </CardsContext.Provider>
       <Footer />
       <EditProfilePopup
