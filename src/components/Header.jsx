@@ -9,7 +9,7 @@ export default function Header({ loggedIn, handleLogout }) {
   const [email, setEmail] = useState('')
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && currentUser.email) {
       setEmail(currentUser.email)
     }
   }, [currentUser])

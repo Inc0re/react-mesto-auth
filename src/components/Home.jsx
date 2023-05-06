@@ -40,8 +40,7 @@ function Home({ setCurrentUser }) {
       .then(res => {
         setCurrentUser({
           ...currentUser,
-          avatar: res.avatar,
-        })
+          avatar: res.avatar})
         closeAllPopups()
       })
       .catch(err => console.log(err))
@@ -67,7 +66,7 @@ function Home({ setCurrentUser }) {
           ...currentUser,
           name: res.name,
           about: res.about,
-        })
+          })
         closeAllPopups()
       })
       .catch(err => console.log(err))

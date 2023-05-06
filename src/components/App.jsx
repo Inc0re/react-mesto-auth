@@ -12,15 +12,21 @@ import api from '../utils/Api'
 import authApi from '../utils/AuthApi'
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    about: '',
+    avatar: '',
+    _id: '',
+    email: '',
+    cohort: '',
+  })
+  const [loggedIn, setLoggedIn] = useState(true)
 
   function getCurrentUserInfo() {
     api
       .getCurrentUserInfo()
       .then(res => {
         setCurrentUser({
-          ...currentUser,
           name: res.name,
           about: res.about,
           avatar: res.avatar,
@@ -31,14 +37,10 @@ function App() {
       .catch(err => console.log(err))
   }
 
-  // function checkToken() {
-    
-  // }
-
   function handleLogout() {
     localStorage.removeItem('jwt')
     setLoggedIn(false)
-    setCurrentUser(null)
+    setCurrentUser({})
   }
 
   React.useEffect(() => {
@@ -49,10 +51,9 @@ function App() {
         .then(res => {
           if (res) {
             setLoggedIn(true)
-            setCurrentUser({
+            setCurrentUser({ 
               ...currentUser,
-              email: res.data.email,
-            })
+              email: res.email })
           }
         })
         .catch(err => console.log(err))
@@ -67,7 +68,10 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header loggedIn={loggedIn} handleLogout={handleLogout}/>
+      <Header
+        loggedIn={loggedIn}
+        handleLogout={handleLogout}
+      />
       <Routes>
         <Route
           path='*'
@@ -83,7 +87,12 @@ function App() {
         <Route
           path='/sign-in'
           element={
-            <ProtectedRoute element={Login} loggedIn={!loggedIn} setLoggedIn={setLoggedIn} path='/' />
+            <ProtectedRoute
+              element={Login}
+              loggedIn={!loggedIn}
+              setLoggedIn={setLoggedIn}
+              path='/'
+            />
           }
         />
         <Route
