@@ -12,27 +12,21 @@ import api from '../utils/Api'
 import authApi from '../utils/AuthApi'
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({
-    name: '',
-    about: '',
-    avatar: '',
-    _id: '',
-    email: '',
-    cohort: '',
-  })
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [currentUser, setCurrentUser] = useState({})
+  const [loggedIn, setLoggedIn] = useState(false)
 
   function getCurrentUserInfo() {
     api
       .getCurrentUserInfo()
       .then(res => {
-        setCurrentUser({
+        setCurrentUser(currentUser => ({
+          ...currentUser,
           name: res.name,
           about: res.about,
           avatar: res.avatar,
           _id: res._id,
           cohort: res.cohort,
-        })
+        }))
       })
       .catch(err => console.log(err))
   }
@@ -51,9 +45,10 @@ function App() {
         .then(res => {
           if (res) {
             setLoggedIn(true)
-            setCurrentUser({ 
+            setCurrentUser(currentUser => ({
               ...currentUser,
-              email: res.email })
+              email: res.email,
+            }))
           }
         })
         .catch(err => console.log(err))
@@ -68,10 +63,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header
-        loggedIn={loggedIn}
-        handleLogout={handleLogout}
-      />
+      <Header loggedIn={loggedIn} handleLogout={handleLogout} />
       <Routes>
         <Route
           path='*'
@@ -79,7 +71,7 @@ function App() {
             <ProtectedRoute
               element={Home}
               loggedIn={loggedIn}
-              path='/sign-up'
+              path='/sign-in'
               setCurrentUser={setCurrentUser}
             />
           }

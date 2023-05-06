@@ -1,18 +1,18 @@
 class AuthApi {
   constructor(options) {
-    this._baseUrl = options.baseUrl;
-    this._headers = options.headers;
+    this._baseUrl = options.baseUrl
+    this._headers = options.headers
   }
 
   _getJson(res) {
     if (res.ok) {
-      return res.json();
+      return res.json()
     }
-    return Promise.reject(`Error: ${res.status}`);
+    return Promise.reject(`Error: ${res.status}`)
   }
 
   _request(url, options) {
-    return fetch(url, options).then(this._getJson);
+    return fetch(url, options).then(this._getJson)
   }
 
   register(data) {
@@ -23,7 +23,7 @@ class AuthApi {
         email: data.email,
         password: data.password,
       }),
-    });
+    })
   }
 
   login(data) {
@@ -34,7 +34,7 @@ class AuthApi {
         email: data.email,
         password: data.password,
       }),
-    });
+    })
   }
 
   checkToken(token) {
@@ -43,15 +43,17 @@ class AuthApi {
         ...this._headers,
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
   }
 }
 
 const authApi = new AuthApi({
-  baseUrl: 'https://auth.nomoreparties.co',
+  // baseUrl: 'https://auth.nomoreparties.co',
+  // baseUrl: 'http://104.131.160.75:3000',
+  baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },
-});
+})
 
-export default authApi;
+export default authApi
