@@ -48,9 +48,8 @@ class AuthApi {
 }
 
 const authApi = new AuthApi({
-  // baseUrl: 'https://auth.nomoreparties.co',
-  // baseUrl: 'http://104.131.160.75:3000',
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'https://auth.nomoreparties.co',
+  // baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },

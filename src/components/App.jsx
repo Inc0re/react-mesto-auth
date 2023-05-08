@@ -47,7 +47,7 @@ function App() {
             setLoggedIn(true)
             setCurrentUser(currentUser => ({
               ...currentUser,
-              email: res.email,
+              email: res.data.email,
             }))
           }
         })
