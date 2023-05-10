@@ -1,70 +1,60 @@
-import React from 'react';
-import PopupWithForm from './PopupWithForm';
+import React from 'react'
+import PopupWithForm from './PopupWithForm'
+import useForm from '../hooks/useForm'
 
-function AddPlacePopup({isOpen, onClose, onPlaceAdd}) {
-
-  const [name, setName] = React.useState('');
-  const [link, setLink] = React.useState('');
+function AddPlacePopup({ isOpen, onClose, onPlaceAdd }) {
+  const { values, handleChange, setValues } = useForm({})
 
   React.useEffect(() => {
-    setName('');
-    setLink('');
-  }, [isOpen]);
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleLinkChange(e) {
-    setLink(e.target.value);
-  }
+    setValues({
+      name: '',
+      link: '',
+    })
+  }, [isOpen, setValues])
 
   function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    onPlaceAdd({
-      name: name,
-      link: link,
-    });
+    onPlaceAdd(values)
   }
 
   return (
     <PopupWithForm
-        name='add-place'
-        title='Новое место'
-        isOpen={isOpen}
-        onClose={onClose}
-        buttonText='Создать'
-        onSubmit={handleSubmit}
-      >
-        <div className='edit-form__wrapper'>
-          <input
-            className='edit-form__field'
-            name='name'
-            type='text'
-            placeholder='Название'
-            required
-            minLength='2'
-            maxLength='30'
-            value={name}
-            onChange={handleNameChange}
-          />
-          <span className='edit-form__error' />
-        </div>
-        <div className='edit-form__wrapper'>
-          <input
-            className='edit-form__field'
-            name='link'
-            type='url'
-            placeholder='Ссылка на картинку'
-            required
-            value={link}
-            onChange={handleLinkChange}
-          />
-          <span className='edit-form__error' />
-        </div>
-      </PopupWithForm>
-  );
+      name='add-place'
+      title='Новое место'
+      isOpen={isOpen}
+      onClose={onClose}
+      buttonText='Создать'
+      onSubmit={handleSubmit}
+    >
+      <div className='edit-form__wrapper'>
+        <input
+          className='edit-form__field'
+          name='name'
+          type='text'
+          placeholder='Название'
+          required
+          minLength='2'
+          maxLength='30'
+          value={values.name || ''}
+          onChange={handleChange}
+        />
+        <span className='edit-form__error' />
+      </div>
+      <div className='edit-form__wrapper'>
+        <input
+          className='edit-form__field'
+          name='link'
+          type='url'
+          placeholder='Ссылка на картинку'
+          required
+          value={values.link || ''}
+          onChange={handleChange}
+        />
+        <span className='edit-form__error' />
+      </div>
+    </PopupWithForm>
+  )
 }
 
-export default AddPlacePopup;
+export default AddPlacePopup
