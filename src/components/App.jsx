@@ -5,6 +5,7 @@ import Home from './Home'
 import Login from './Login'
 import Register from './Register'
 import ProtectedRoute from './ProtectedRoute'
+import InfoTooltip from './InfoTooltip'
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
@@ -14,6 +15,8 @@ import authApi from '../utils/AuthApi'
 function App() {
   const [currentUser, setCurrentUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false)
+  const [isTooltipSuccess, setIsTooltipSuccess] = useState(false)
 
   function getCurrentUserInfo() {
     api
@@ -29,6 +32,38 @@ function App() {
         }))
       })
       .catch(err => console.log(err))
+  }
+
+  function handleRegister(userData) {
+    authApi
+      .register(userData)
+      .then(res => {
+        setIsTooltipSuccess(true)
+        setIsTooltipOpen(true)
+      })
+      .catch(err => {
+        setIsTooltipSuccess(false)
+        setIsTooltipOpen(true)
+        console.log(err)
+      })
+  }
+
+  function handleLogin(userData) {
+    authApi
+      .login(userData)
+      .then(res => {
+        if (res.token) {
+          setIsTooltipSuccess(true)
+          localStorage.setItem('jwt', res.token)
+          setLoggedIn(true)
+          console.log('Успешная авторизация. Токен сохранен в localStorage')
+        }
+      })
+      .catch(err => {
+        setIsTooltipSuccess(false)
+        setIsTooltipOpen(true)
+        console.log(err)
+      })
   }
 
   function handleLogout() {
@@ -83,6 +118,7 @@ function App() {
               element={Login}
               loggedIn={!loggedIn}
               setLoggedIn={setLoggedIn}
+              handleLogin={handleLogin}
               path='/'
             />
           }
@@ -90,10 +126,20 @@ function App() {
         <Route
           path='/sign-up'
           element={
-            <ProtectedRoute element={Register} loggedIn={!loggedIn} path='/' />
+            <ProtectedRoute
+              element={Register}
+              loggedIn={!loggedIn}
+              handleRegister={handleRegister}
+              path='/'
+            />
           }
         />
       </Routes>
+      <InfoTooltip
+        isOpened={isTooltipOpen}
+        isSuccess={isTooltipSuccess}
+        setIsPopupOpened={setIsTooltipOpen}
+      />
     </CurrentUserContext.Provider>
   )
 }
