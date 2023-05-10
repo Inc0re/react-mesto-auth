@@ -1,36 +1,28 @@
 import React from 'react'
 import PopupWithForm from './PopupWithForm'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import useForm from '../hooks/useForm'
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const [name, setName] = React.useState('')
-  const [description, setDescription] = React.useState('')
+  // const [name, setName] = React.useState('')
+  // const [description, setDescription] = React.useState('')
+  const { values, handleChange, setValues } = useForm({})
   const currentUser = React.useContext(CurrentUserContext)
 
   React.useEffect(() => {
     if (currentUser) {
-      setName(currentUser.name)
-      setDescription(currentUser.about)
+      // setName(currentUser.name)
+      // setDescription(currentUser.about)
+      setValues({ name: currentUser.name, about: currentUser.about })
     }
   }, [currentUser, isOpen])
-
-  function handleNameChange(e) {
-    setName(e.target.value)
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value)
-  }
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault()
 
     // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({
-      name: name,
-      about: description,
-    })
+    onUpdateUser(values)
   }
 
   return (
@@ -51,22 +43,22 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required
           minLength='2'
           maxLength='40'
-          value={name || ''}
-          onChange={handleNameChange}
+          value={values.name || ''}
+          onChange={handleChange}
         />
         <span className='edit-form__error' />
       </div>
       <div className='edit-form__wrapper'>
         <input
           className='edit-form__field'
-          name='description'
+          name='about'
           type='text'
           placeholder='Место работы'
           required
           minLength='2'
           maxLength='200'
-          value={description || ''}
-          onChange={handleDescriptionChange}
+          value={values.about || ''}
+          onChange={handleChange}
         />
         <span className='edit-form__error' />
       </div>
