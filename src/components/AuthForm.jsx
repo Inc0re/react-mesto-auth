@@ -1,23 +1,24 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useForm from '../hooks/useForm'
 
 function AuthForm({ title, btnText, onSubmit, showLink }) {
-  const [userData, setUserData] = useState({
-    email: '',
-    password: '',
-  })
+  const { values, handleChange } = useForm({})
+  // const [userData, setUserData] = useState({
+  //   email: '',
+  //   password: '',
+  // })
 
-  function handleChange(e) {
-    const { name, value } = e.target
-    setUserData({
-      ...userData,
-      [name]: value,
-    })
-  }
+  // function handleChange(e) {
+  //   const { name, value } = e.target
+  //   setUserData({
+  //     ...userData,
+  //     [name]: value,
+  //   })
+  // }
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSubmit(userData)
+    onSubmit(values)
   }
 
   return (
@@ -28,7 +29,7 @@ function AuthForm({ title, btnText, onSubmit, showLink }) {
         type='email'
         name='email'
         placeholder='Email'
-        value={userData.email}
+        value={values.email || ''}
         onChange={handleChange}
         required
       />
@@ -37,7 +38,7 @@ function AuthForm({ title, btnText, onSubmit, showLink }) {
         type='password'
         name='password'
         placeholder='Пароль'
-        value={userData.password}
+        value={values.password || ''}
         onChange={handleChange}
         required
       />
