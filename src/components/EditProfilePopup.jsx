@@ -4,24 +4,17 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext'
 import useForm from '../hooks/useForm'
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const [name, setName] = React.useState('')
-  const [description, setDescription] = React.useState('')
+  const { values, handleChange, setValues } = useForm({})
   const currentUser = React.useContext(CurrentUserContext)
 
   React.useEffect(() => {
     if (currentUser) {
-      setName(currentUser.name)
-      setDescription(currentUser.about)
+      setValues({
+        name: currentUser.name,
+        about: currentUser.about,
+      })
     }
-  }, [currentUser, isOpen])
-
-  function handleNameChange(e) {
-    setName(e.target.value)
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value)
-  }
+  }, [currentUser, isOpen, setValues])
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
