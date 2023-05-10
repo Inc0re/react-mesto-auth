@@ -8,6 +8,7 @@ function PopupWithForm({
   children,
   buttonText,
   onSubmit,
+  isValid
 }) {
   return (
     <Popup name={name} isOpen={isOpen} onClose={onClose}>
@@ -20,7 +21,7 @@ function PopupWithForm({
       >
         <h2 className='edit-form__title'>{title}</h2>
         {children}
-        <button className='edit-form__btn-save' type='submit'>
+        <button className='edit-form__btn-save' type='submit' disabled={!isValid}>
           {buttonText}
         </button>
       </form>
