@@ -1,20 +1,22 @@
 import React from 'react'
 import PopupWithForm from './PopupWithForm'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
-import useForm from '../hooks/useForm'
+import useFormAndValidation from '../hooks/useFormAndValidation'
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const { values, handleChange, setValues } = useForm({})
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
+    useFormAndValidation()
   const currentUser = React.useContext(CurrentUserContext)
 
   React.useEffect(() => {
     if (currentUser) {
+      resetForm()
       setValues({
         name: currentUser.name,
         about: currentUser.about,
       })
     }
-  }, [currentUser, isOpen, setValues])
+  }, [currentUser, isOpen, setValues, resetForm])
 
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -32,6 +34,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       onClose={onClose}
       buttonText='Сохранить'
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <div className='edit-form__wrapper'>
         <input
@@ -45,7 +48,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           value={values.name || ''}
           onChange={handleChange}
         />
-        <span className='edit-form__error' />
+        <span className='edit-form__error'>{errors.name || ''}</span>
       </div>
       <div className='edit-form__wrapper'>
         <input
@@ -59,7 +62,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           value={values.about || ''}
           onChange={handleChange}
         />
-        <span className='edit-form__error' />
+        <span className='edit-form__error'>{errors.about || ''}</span>
       </div>
     </PopupWithForm>
   )

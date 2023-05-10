@@ -1,10 +1,8 @@
 import React from 'react'
 import PopupWithForm from './PopupWithForm'
-// import useForm from '../hooks/useForm'
 import useFormAndValidation from '../hooks/useFormAndValidation'
 
 function AddPlacePopup({ isOpen, onClose, onPlaceAdd }) {
-  // const { values, handleChange, setValues } = useForm({})
   const { values, handleChange, errors, isValid, setValues, resetForm } =
     useFormAndValidation()
 
