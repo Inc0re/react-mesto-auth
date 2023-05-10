@@ -1,16 +1,20 @@
 import React from 'react'
 import PopupWithForm from './PopupWithForm'
-import useForm from '../hooks/useForm'
+// import useForm from '../hooks/useForm'
+import useFormAndValidation from '../hooks/useFormAndValidation'
 
 function AddPlacePopup({ isOpen, onClose, onPlaceAdd }) {
-  const { values, handleChange, setValues } = useForm({})
+  // const { values, handleChange, setValues } = useForm({})
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
+    useFormAndValidation()
 
   React.useEffect(() => {
     setValues({
       name: '',
       link: '',
     })
-  }, [isOpen, setValues])
+    resetForm()
+  }, [isOpen, setValues, resetForm])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -26,6 +30,7 @@ function AddPlacePopup({ isOpen, onClose, onPlaceAdd }) {
       onClose={onClose}
       buttonText='Создать'
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <div className='edit-form__wrapper'>
         <input
@@ -39,7 +44,7 @@ function AddPlacePopup({ isOpen, onClose, onPlaceAdd }) {
           value={values.name || ''}
           onChange={handleChange}
         />
-        <span className='edit-form__error' />
+        <span className='edit-form__error'>{errors.name || ''}</span>
       </div>
       <div className='edit-form__wrapper'>
         <input
@@ -51,7 +56,7 @@ function AddPlacePopup({ isOpen, onClose, onPlaceAdd }) {
           value={values.link || ''}
           onChange={handleChange}
         />
-        <span className='edit-form__error' />
+        <span className='edit-form__error'>{errors.link || ''}</span>
       </div>
     </PopupWithForm>
   )
